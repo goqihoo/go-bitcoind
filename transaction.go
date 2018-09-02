@@ -44,6 +44,27 @@ type RawTransaction struct {
 	Blocktime     int64  `json:"blocktime,omitempty"`
 }
 
+// Omini transaction details
+type OmniTransaction struct {
+	BlockHash        string  `json:"blockhash"`
+	Fee              string  `json:"fee"`
+	TypeInt          int64   `json:"type_int"`
+	Amount           string  `json:"amount"`
+	TypeString       string  `json:"type"`
+	BlockTime        int64   `json"blocktime"`
+	PositionInBlock  int64   `json:"positioninblock""`
+	Block            int64   `json:"block"`
+	Confirmations    int64   `json:"confirmations"`
+	SendingAddress   string  `json:"sendingaddress"`
+	IsMine           bool    `json:"ismine"`
+	Valid            bool    `json:"valid"`
+	PropertyId       int64   `json:"propertyid"`
+	Divisible        bool    `json:"divisible"`
+	Txid             string  `json:"txid"`
+	ReferenceAddress string  `json:"referenceaddress"`
+	Version          int64   `json:"version"`
+}
+
 // TransactionDetails represents details about a transaction
 type TransactionDetails struct {
 	Account  string  `json:"account"`

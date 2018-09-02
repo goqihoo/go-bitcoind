@@ -272,6 +272,18 @@ func (b *Bitcoind) GetRawMempool() (txId []string, err error) {
 	return
 }
 
+// OmniGetTrade return transaction info for given transaction id.
+func (b *Bitcoind) OmniGetTrade(txId string) (rawTx interface{}, err error){
+	r, err := b.client.call("omni_gettrade", []interface{}{txId})
+	if err = handleError(err, &r); err != nil {
+		return
+	}
+	var t OmniTransaction
+	err = json.Unmarshal(r.Result, &t)
+	rawTx = t
+	return
+}
+
 // GetRawTransaction returns raw transaction representation for given transaction id.
 func (b *Bitcoind) GetRawTransaction(txId string, verbose bool) (rawTx interface{}, err error) {
 	intVerbose := 0
