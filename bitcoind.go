@@ -284,6 +284,15 @@ func (b *Bitcoind) OmniGetTrade(txId string) (rawTx interface{}, err error){
 	return
 }
 
+func (b *Bitcoind) OmniListBlockTransactions(index int64) (txId []string, err error) {
+	r, err := b.client.call("omni_listblocktransactions", []interface{}{txId})
+	if err = handleError(err, &r); err != nil {
+		return
+	}
+	err = json.Unmarshal(r.Result, &txId)
+	return
+}
+
 // GetRawTransaction returns raw transaction representation for given transaction id.
 func (b *Bitcoind) GetRawTransaction(txId string, verbose bool) (rawTx interface{}, err error) {
 	intVerbose := 0
