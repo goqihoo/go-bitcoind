@@ -285,7 +285,7 @@ func (b *Bitcoind) OmniGetTrade(txId string) (rawTx interface{}, err error){
 }
 
 func (b *Bitcoind) OmniListBlockTransactions(index int64) (txId []string, err error) {
-	r, err := b.client.call("omni_listblocktransactions", []interface{}{txId})
+	r, err := b.client.call("omni_listblocktransactions", []interface{}{index})
 	if err = handleError(err, &r); err != nil {
 		return
 	}
