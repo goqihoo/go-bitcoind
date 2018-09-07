@@ -54,7 +54,7 @@ type OmniTransaction struct {
 	BlockTime        int64   `json"blocktime"`
 	PositionInBlock  int64   `json:"positioninblock""`
 	Block            int64   `json:"block"`
-	Confirmations    int64   `json:"confirmations"`
+	Confirmations    uint64  `json:"confirmations"`
 	SendingAddress   string  `json:"sendingaddress"`
 	IsMine           bool    `json:"ismine"`
 	Valid            bool    `json:"valid"`
