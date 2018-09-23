@@ -284,6 +284,16 @@ func (b *Bitcoind) OmniGetTrade(txId string) (rawTx interface{}, err error){
 	return
 }
 
+// OmniSend return transaction hash for send
+func (b *Bitcoind) OmniSend(fromAddress, toAddress string, propertyId int, amount, redeemaddress, referenceamount string) (txID string, err error){
+	r, err := b.client.call("omni_send", []interface{}{fromAddress, toAddress, propertyId, amount, redeemaddress, referenceamount})
+	if err = handleError(err, &r); err != nil {
+		return
+	}
+	err = json.Unmarshal(r.Result, &txID)
+	return
+}
+
 func (b *Bitcoind) OmniListBlockTransactions(index int64) (txId []string, err error) {
 	r, err := b.client.call("omni_listblocktransactions", []interface{}{index})
 	if err = handleError(err, &r); err != nil {
