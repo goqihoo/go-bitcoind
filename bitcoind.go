@@ -2,6 +2,7 @@
 package bitcoind
 
 import (
+	"strings"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -285,8 +286,15 @@ func (b *Bitcoind) OmniGetTrade(txId string) (rawTx interface{}, err error){
 }
 
 // OmniSend return transaction hash for send
-func (b *Bitcoind) OmniSend(fromAddress, toAddress string, propertyId int, amount string) (txID string, err error){
-	r, err := b.client.call("omni_send", []interface{}{fromAddress, toAddress, propertyId, amount})
+func (b *Bitcoind) OmniSend(fromAddress, toAddress string, propertyId int, amount, redeemaddress, referenceamount string) (txID string, err error){
+	params := []interface{}{fromAddress, toAddress, propertyId, amount}
+	if strings.Compare(redeemaddress, "") != 0 {
+		params = append(params, redeemaddress)
+		if strings.Compare(referenceamount, "") != 0 {
+			params = append(params, referenceamount)
+		}
+	}
+	r, err := b.client.call("omni_send", )
 	if err = handleError(err, &r); err != nil {
 		return
 	}
