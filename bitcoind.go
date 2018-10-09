@@ -302,6 +302,16 @@ func (b *Bitcoind) OmniSend(fromAddress, toAddress string, propertyId int, amoun
 	return
 }
 
+// Creates and sends a funded simple send transaction
+func (b *Bitcoind) OmniFundedSend(fromAddress, toAddress string, propertyId int, amount, feeaddress string)  (txID string, err error){
+	r, err := b.client.call("omni_funded_send", []interface{}{fromAddress, toAddress, propertyId, amount, feeaddress})
+	if err = handleError(err, &r); err != nil {
+		return
+	}
+	err = json.Unmarshal(r.Result, &txID)
+	return
+}
+
 func (b *Bitcoind) OmniListBlockTransactions(index int64) (txId []string, err error) {
 	r, err := b.client.call("omni_listblocktransactions", []interface{}{index})
 	if err = handleError(err, &r); err != nil {
