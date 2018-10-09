@@ -294,7 +294,7 @@ func (b *Bitcoind) OmniSend(fromAddress, toAddress string, propertyId int, amoun
 			params = append(params, referenceamount)
 		}
 	}
-	r, err := b.client.call("omni_send", )
+	r, err := b.client.call("omni_send", params)
 	if err = handleError(err, &r); err != nil {
 		return
 	}
