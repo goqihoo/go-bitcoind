@@ -312,6 +312,15 @@ func (b *Bitcoind) OmniFundedSend(fromAddress, toAddress string, propertyId int,
 	return
 }
 
+func (b *Bitcoind) OmniGetBalance(address string, propertyId int)  (balance float64, err error) {
+	r, err := b.client.call("omni_getbalance", []interface{}{address, propertyId})
+	if err = handleError(err, &r); err != nil {
+		return
+	}
+	balance, err = strconv.ParseFloat(string(r.Result), 64)
+	return
+}
+
 func (b *Bitcoind) OmniListBlockTransactions(index int64) (txId []string, err error) {
 	r, err := b.client.call("omni_listblocktransactions", []interface{}{index})
 	if err = handleError(err, &r); err != nil {
