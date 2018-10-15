@@ -21,6 +21,12 @@ type Bitcoind struct {
 	client *rpcClient
 }
 
+type OmniBalance struct {
+	Balance string `json:"balance"`
+	Reserved string `json:"reserved"`
+	Frozen string `json:"frozen"`
+}
+
 // New return a new bitcoind
 func New(host string, port int, user, passwd string, useSSL bool) (*Bitcoind, error) {
 	rpcClient, err := newClient(host, port, user, passwd, useSSL)
@@ -312,12 +318,12 @@ func (b *Bitcoind) OmniFundedSend(fromAddress, toAddress string, propertyId int,
 	return
 }
 
-func (b *Bitcoind) OmniGetBalance(address string, propertyId int)  (balance float64, err error) {
+func (b *Bitcoind) OmniGetBalance(address string, propertyId int)  (balance *OmniBalance, err error) {
 	r, err := b.client.call("omni_getbalance", []interface{}{address, propertyId})
 	if err = handleError(err, &r); err != nil {
-		return
+		return nil, err
 	}
-	balance, err = strconv.ParseFloat(string(r.Result), 64)
+	err = json.Unmarshal(r.Result, &balance)
 	return
 }
 
